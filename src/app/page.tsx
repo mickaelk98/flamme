@@ -1,28 +1,14 @@
-import { FaInstagram, FaFacebook, FaHeart } from "react-icons/fa";
-import { BsTwitterX } from "react-icons/bs";
+"use client";
+
+import { useRouter } from "next/navigation";
+import Header from "./components/Header";
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <>
-      <header className="w-full max-w-[1600px] mx-auto flex items-center justify-between mb-[100px]">
-        <div className="flex items-center gap-4 text-4xl text-white font-bold py-5">
-          <FaHeart />
-          <h1 className="text-4xl text-white font-bold">Flamme</h1>
-        </div>
-        <nav className="flex items-center gap-10">
-          <ul className="flex items-center gap-4 text-4xl text-white">
-            <li className="cursor-pointer">
-              <FaInstagram />
-            </li>
-            <li className="cursor-pointer">
-              <BsTwitterX />
-            </li>
-            <li className="cursor-pointer">
-              <FaFacebook />
-            </li>
-          </ul>
-        </nav>
-      </header>
+      <Header />
       <main className="w-full max-w-[1600px] mx-auto text-white">
         <div className="max-w-xl">
           <h1 className="text-5xl font-bold text-black-900 mb-10">Flamme</h1>
@@ -37,12 +23,18 @@ export default function Home() {
           </p>
           <ul className="flex items-center gap-4">
             <li>
-              <button className="bg-white text-rose-400 p-2 text-xl font-bold rounded-3xl">
+              <button
+                onClick={() => router.push("/signup")}
+                className="bg-white text-rose-400 p-2 text-xl font-bold rounded-3xl"
+              >
                 Inscription
               </button>
             </li>
             <li>
-              <button className="bg-rose-400 text-wite p-2 text-xl font-bold rounded-3xl">
+              <button
+                onClick={() => router.push("/login")}
+                className="bg-rose-400 text-wite p-2 text-xl font-bold rounded-3xl"
+              >
                 Connexion
               </button>
             </li>

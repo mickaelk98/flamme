@@ -1,7 +1,37 @@
+"use client";
+
+import Header from "../components/Header";
+import Link from "next/link";
+import SignupFormOne from "../components/Signup/SignupFormOne";
+import { useState } from "react";
+import SignupFormTwo from "../components/Signup/SignupFormTwo";
+
 export default function SignUp() {
+  const [step, setStep] = useState(0);
+  const formList = [
+    <SignupFormOne key={1} setStep={setStep} />,
+    <SignupFormTwo key={2} setStep={setStep} />,
+  ];
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <h1>Sign up page</h1>
-    </div>
+    <>
+      <Header />
+      <main className="w-full max-w-[1600px] mx-auto text-white flex flex-col items-center mb-[100px]">
+        <h1 className="text-5xl font-bold mb-10">Inscription</h1>
+        <div className="flex flex-col gap-4 p-10 w-[500px] text-black">
+          {formList[step]}
+          <Link className="self-start" href="/login">
+            J&apos;ai deja un compte
+          </Link>
+          {step === 1 ? (
+            <button className=" bg-rose-400 p-2 text-xl font-bold rounded-3xl text-center">
+              S&apos;inscrire
+            </button>
+          ) : (
+            <></>
+          )}
+        </div>
+      </main>
+    </>
   );
 }
