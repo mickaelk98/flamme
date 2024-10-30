@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import BodyClassUpdater from "./components/BodyClassUpdater";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -8,17 +9,15 @@ export const metadata: Metadata = {
   icons: "/flamme.webp",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang="fr">
-      <body
-        className="flex flex-col h-screen bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: 'url("/landing.jpg")' }}
-      >
+      <body className="flex flex-col">
+        <BodyClassUpdater />
         {children}
       </body>
     </html>
