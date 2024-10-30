@@ -17,19 +17,19 @@ export default function SignUp() {
     <>
       <Header />
       <main className="w-full max-w-[1600px] mx-auto text-white flex flex-col items-center mb-[100px]">
-        <h1 className="text-5xl font-bold mb-10">Inscription</h1>
-        <div className="flex flex-col gap-4 p-10 w-[500px] text-black">
+        <h1 className="text-5xl font-bold mb-5">Inscription</h1>
+        <div className="flex flex-col gap-4 w-[500px] text-black">
           {formList[step]}
           <Link className="self-start" href="/login">
             J&apos;ai deja un compte
           </Link>
-          {step === 1 ? (
+          {/* {step === 1 ? (
             <button className=" bg-rose-400 p-2 text-xl font-bold rounded-3xl text-center">
               S&apos;inscrire
             </button>
           ) : (
             <></>
-          )}
+          )} */}
         </div>
       </main>
     </>
