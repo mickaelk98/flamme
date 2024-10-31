@@ -3,7 +3,7 @@ import { BsTwitterX } from "react-icons/bs";
 
 export default function Header() {
   return (
-    <header className="w-full max-w-[1600px] mx-auto flex items-center justify-between mb-[100px]">
+    <header className="w-full px-5 max-w-[1600px] mx-auto flex items-center justify-between mb-[100px]">
       <div className="flex items-center gap-4 text-4xl text-white font-bold py-5">
         <FaHeart />
         <h1 className="text-4xl text-white font-bold">Flamme</h1>

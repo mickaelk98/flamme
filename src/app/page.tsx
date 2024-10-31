@@ -2,14 +2,13 @@
 
 import { useRouter } from "next/navigation";
 import Header from "./components/Header";
-
 export default function Home() {
   const router = useRouter();
 
   return (
     <>
       <Header />
-      <main className="w-full max-w-[1600px] mx-auto text-white">
+      <main className="w-full px-5 max-w-[1600px] mx-auto text-white">
         <div className="max-w-xl">
           <h1 className="text-5xl font-bold text-black-900 mb-10">Flamme</h1>
           <p className="mb-10 text-xl">
