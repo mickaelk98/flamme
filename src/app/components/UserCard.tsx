@@ -1,8 +1,9 @@
 import React from "react";
 import Image from "next/image";
 import { FaHeart, FaTimes } from "react-icons/fa";
+import { User } from "../Interfaces";
 
-const UserCard = () => {
+const UserCard: React.FC<{ user: User }> = ({ user }) => {
   return (
     <div className="relative w-72 h-96 rounded-lg overflow-hidden shadow-lg bg-gray-200">
       {/* Image de fond */}
@@ -19,7 +20,7 @@ const UserCard = () => {
       <div className="flex flex-col items-center justify-center w-full h-full">
         {/* Nom et âge de l'utilisateur */}
         <div className="absolute bottom-14 text-center text-white z-10">
-          <h2 className="text-2xl font-semibold">john doe</h2>
+          <h2 className="text-2xl font-semibold">{user.name}</h2>
           <p className="text-lg">30 ans</p>
         </div>
 
