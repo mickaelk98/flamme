@@ -36,9 +36,13 @@ export async function POST(req: Request) {
 
       imageUrl = `${process.env.APPWRITE_ENDPOINT}/storage/buckets/${process.env.APPWRITE_BUCKETID}/files/${fileUpload.$id}/view?project=${process.env.APPWRITE_PROJECTID}`;
     }
+    const age = calculateAge(dateOfBirth);
+
+    console.log(age);
 
     await users.updatePrefs(userId, {
       dateOfBirth,
+      age,
       gender,
       bio,
       picture: imageUrl,
@@ -55,4 +59,21 @@ export async function POST(req: Request) {
       { status: 500 }
     );
   }
+}
+
+function calculateAge(dateOfBirth: string): number {
+  const [day, month, year] = dateOfBirth.split("/").map(Number);
+  const birthDate = new Date(year, month - 1, day);
+  const currentDate = new Date();
+  let age = currentDate.getFullYear() - birthDate.getFullYear();
+
+  const birthdayNotYetOccurred =
+    currentDate.getMonth() < birthDate.getMonth() ||
+    (currentDate.getMonth() === birthDate.getMonth() &&
+      currentDate.getDate() < birthDate.getDate());
+
+  if (birthdayNotYetOccurred) {
+    age -= 1;
+  }
+  return age;
 }
