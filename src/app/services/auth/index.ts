@@ -1,20 +1,39 @@
 import { account, ID } from "@/app/appwrite";
+import { SignupUser } from "@/app/Interfaces";
 
-export async function signup(email: string, password: string, name: string) {
+export async function signup(data: SignupUser) {
   try {
-    const user = await account.create(ID.unique(), email, password, name);
+    const { email, name, password, dateOfBirth, picture, gender, bio } = data;
+    // Crée l'utilisateur avec email et mot de passe
+    let user = await account.create(ID.unique(), email, password, name);
+    const formData = new FormData();
+    formData.append("userId", user.$id);
+    formData.append("dateOfBirth", dateOfBirth.toLocaleDateString("fr-FR"));
+    formData.append("gender", gender);
+    formData.append("bio", bio);
 
-    if (user) {
-      console.log(user);
-      return user;
-    } else {
-      return null;
+    // Vérifie si une image a été fournie
+    if (picture) {
+      formData.append("picture", picture);
     }
+
+    // Appelle l'API pour upload l'image
+    const response = await fetch("http://localhost:3000/api/uploadimage", {
+      method: "POST",
+      body: formData,
+    });
+
+    user = await response.json();
+
+    if (response.status !== 200) {
+      throw user;
+    }
+
+    return user;
   } catch (e) {
     throw e;
   }
 }
-
 export async function login(email: string, password: string) {
   try {
     const user = await account.createEmailPasswordSession(email, password);
