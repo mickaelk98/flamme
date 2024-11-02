@@ -1,8 +1,14 @@
 import type { NextConfig } from "next";
+import { RemotePattern } from "next/dist/shared/lib/image-config";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ["cloud.appwrite.io"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cloud.appwrite.io",
+      },
+    ] as RemotePattern[],
   },
 };
 
