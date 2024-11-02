@@ -23,5 +23,11 @@ export interface User {
   $id: string;
   name: string;
   email: string;
+  prefs: {
+    dataOfBirth: string;
+    gender: string;
+    bio: string;
+    picture: string;
+  };
   [prop: string]: unknown;
 }
