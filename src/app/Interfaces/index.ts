@@ -25,6 +25,7 @@ export interface User {
   email: string;
   prefs: {
     dataOfBirth: string;
+    age: number;
     gender: string;
     bio: string;
     picture: string;
