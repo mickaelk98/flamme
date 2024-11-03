@@ -9,7 +9,7 @@ import Header from "../components/Header";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { LoginUser } from "@/app/Interfaces";
-import { login, logout } from "@/app/services";
+import { login } from "@/app/services";
 
 export default function Login() {
   const router = useRouter();
@@ -36,7 +36,6 @@ export default function Login() {
   const onSubmit = async (data: LoginUser) => {
     try {
       const { email, password } = data;
-      await logout();
       await login(email, password);
       router.push("/userpage");
     } catch (error) {

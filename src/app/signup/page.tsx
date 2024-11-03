@@ -62,12 +62,9 @@ export default function SignUp() {
 
   const onSubmit = async (data: SignupUser) => {
     try {
-      console.log(data);
-
       const result = await signup(data);
-      console.log("resultat de signup", result);
-
-      // router.push("/login");
+      console.log(result);
+      router.push("/login");
     } catch (error) {
       console.log(error);
     }
