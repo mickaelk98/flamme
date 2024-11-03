@@ -1,4 +1,3 @@
-import { account } from "@/app/appwrite";
 import { SignupUser } from "@/app/Interfaces";
 
 export async function signup(data: SignupUser) {
@@ -56,7 +55,15 @@ export async function login(email: string, password: string) {
 
 export async function logout() {
   try {
-    await account.deleteSessions();
+    const response = await fetch("http://localhost:3000/api/auth/logout", {
+      method: "POST",
+    });
+
+    const user = await response.json();
+
+    if (response.status !== 200) {
+      throw user;
+    }
     return null;
   } catch (e) {
     throw e;
