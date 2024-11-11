@@ -33,10 +33,14 @@ export async function signup(data: SignupUser) {
     throw e;
   }
 }
+
 export async function login(email: string, password: string) {
   try {
     const response = await fetch("http://localhost:3000/api/auth/login", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ email, password }),
     });
 
@@ -45,14 +49,12 @@ export async function login(email: string, password: string) {
     if (response.status !== 200) {
       throw user;
     }
-    console.log("user depuis login client", user);
 
     return user;
   } catch (e) {
     throw e;
   }
 }
-
 export async function logout() {
   try {
     const response = await fetch("http://localhost:3000/api/auth/logout", {
@@ -65,6 +67,16 @@ export async function logout() {
       throw user;
     }
     return null;
+  } catch (e) {
+    throw e;
+  }
+}
+
+export async function getCurrentUser() {
+  try {
+    const response = await fetch("http://localhost:3000/api/auth");
+    const user = await response.json();
+    return user;
   } catch (e) {
     throw e;
   }

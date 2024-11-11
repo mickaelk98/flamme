@@ -1,13 +1,13 @@
+"use server";
+
 import { NextResponse } from "next/server";
 import { users } from "@/app/api";
 import { Query } from "appwrite";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { cookies } from "next/headers";
 
 export async function POST(req: Request) {
   try {
-    const cookiesStore = await cookies();
     const { email, password } = await req.json();
 
     // Rechercher l'utilisateur par email
@@ -18,7 +18,7 @@ export async function POST(req: Request) {
     // Vérifier si l'utilisateur existe
     if (total === 0) {
       return NextResponse.json(
-        { message: "Identifiant ou mot de passe incorrect 1" },
+        { message: "Identifiant ou mot de passe incorrect " },
         { status: 400 }
       );
     } else {
@@ -30,7 +30,7 @@ export async function POST(req: Request) {
 
       if (!validPassword) {
         return NextResponse.json(
-          { message: "Identifiant ou mot de passe incorrect 2" },
+          { message: "Identifiant ou mot de passe incorrect " },
           { status: 400 }
         );
       } else {
@@ -42,12 +42,17 @@ export async function POST(req: Request) {
 
         delete user.password;
 
-        cookiesStore.set("token", token);
-        return NextResponse.json({ ...user }, { status: 200 });
+        return NextResponse.json(user, {
+          status: 200,
+          headers: {
+            "Set-Cookie": `token=${token}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=${
+              60 * 60 * 24 * 7
+            }`,
+          },
+        });
       }
     }
   } catch (error) {
-    console.error("Erreur lors de la récupération des utilisateurs :", error);
     return NextResponse.json(
       {
         message: "Erreur lors de la connexion",

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -12,10 +12,12 @@ import { SignupUser } from "@/app/Interfaces";
 import { signup } from "@/app/services";
 import { Gender } from "@/app/Interfaces";
 import { FaCloudUploadAlt } from "react-icons/fa";
+import { AuthContext } from "../context/AuthContext";
 
 export default function SignUp() {
   const [step, setStep] = useState(0);
   const router = useRouter();
+  const { user } = useContext(AuthContext);
 
   const schema = yup.object().shape({
     name: yup
@@ -59,6 +61,12 @@ export default function SignUp() {
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  useEffect(() => {
+    if (user) {
+      router.push("/userpage");
+    }
+  }, [user, router]);
 
   const onSubmit = async (data: SignupUser) => {
     try {

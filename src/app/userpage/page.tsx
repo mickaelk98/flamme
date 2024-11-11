@@ -1,7 +1,20 @@
+"use client";
+
+import { useContext, useEffect } from "react";
 import AllUsers from "../components/AllUsers";
 import AsideMenu from "../components/AsideMenu";
+import { AuthContext } from "../context/AuthContext";
+import { useRouter } from "next/navigation";
 
 export default function UserPage() {
+  const router = useRouter();
+  const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/");
+    }
+  }, [user, router]);
   return (
     <main className="flex min-h-screen text-3xl">
       <AsideMenu />

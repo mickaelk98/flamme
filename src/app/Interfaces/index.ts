@@ -32,3 +32,7 @@ export interface User {
   };
   [prop: string]: unknown;
 }
+
+export interface AuthContextValue {
+  user: User | null;
+}
