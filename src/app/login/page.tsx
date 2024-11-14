@@ -9,13 +9,12 @@ import Header from "../components/Header";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { LoginUser } from "@/app/Interfaces";
-import { login } from "@/app/services";
 import { useContext } from "react";
 import { AuthContext } from "@/app/context/AuthContext";
 
 export default function Login() {
   const router = useRouter();
-  const { user } = useContext(AuthContext);
+  const { user, loginUser } = useContext(AuthContext);
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -45,7 +44,7 @@ export default function Login() {
   const onSubmit = async (data: LoginUser) => {
     try {
       const { email, password } = data;
-      await login(email, password);
+      loginUser(email, password);
 
       router.push("/userpage");
     } catch (error) {

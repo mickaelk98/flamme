@@ -9,7 +9,6 @@ import Header from "../components/Header";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SignupUser } from "@/app/Interfaces";
-import { signup } from "@/app/services";
 import { Gender } from "@/app/Interfaces";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { AuthContext } from "../context/AuthContext";
@@ -17,7 +16,7 @@ import { AuthContext } from "../context/AuthContext";
 export default function SignUp() {
   const [step, setStep] = useState(0);
   const router = useRouter();
-  const { user } = useContext(AuthContext);
+  const { user, signupUser } = useContext(AuthContext);
 
   const schema = yup.object().shape({
     name: yup
@@ -70,9 +69,7 @@ export default function SignUp() {
 
   const onSubmit = async (data: SignupUser) => {
     try {
-      const result = await signup(data);
-      console.log(result);
-      router.push("/login");
+      signupUser(data);
     } catch (error) {
       console.log(error);
     }

@@ -35,4 +35,7 @@ export interface User {
 
 export interface AuthContextValue {
   user: User | null;
+  signupUser: (data: SignupUser) => void;
+  loginUser: (email: string, password: string) => void;
+  logoutUser: () => void;
 }

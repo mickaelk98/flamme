@@ -1,4 +1,4 @@
-import { SignupUser } from "@/app/Interfaces";
+import { SignupUser, User } from "@/app/Interfaces";
 
 export async function signup(data: SignupUser) {
   try {
@@ -34,7 +34,10 @@ export async function signup(data: SignupUser) {
   }
 }
 
-export async function login(email: string, password: string) {
+export async function login(
+  email: string,
+  password: string
+): Promise<User | null> {
   try {
     const response = await fetch("http://localhost:3000/api/auth/login", {
       method: "POST",
@@ -50,12 +53,12 @@ export async function login(email: string, password: string) {
       throw user;
     }
 
-    return user;
+    return user as User;
   } catch (e) {
     throw e;
   }
 }
-export async function logout() {
+export async function logout(): Promise<null> {
   try {
     const response = await fetch("http://localhost:3000/api/auth/logout", {
       method: "POST",
@@ -68,7 +71,8 @@ export async function logout() {
     }
     return null;
   } catch (e) {
-    throw e;
+    console.log(e);
+    return null;
   }
 }
 
