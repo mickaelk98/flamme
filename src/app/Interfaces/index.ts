@@ -39,3 +39,8 @@ export interface AuthContextValue {
   loginUser: (email: string, password: string) => void;
   logoutUser: () => void;
 }
+
+export interface UsersContextValue {
+  users: User[];
+  likeUser: (user: User, liked: boolean) => void;
+}

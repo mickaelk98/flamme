@@ -1,29 +1,11 @@
 "use client";
 
-import { User } from "../Interfaces";
-import { getAllUser } from "../services";
 import UserCard from "./UserCard";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { UsersContext } from "../context/UsersContext";
 
 export default function AllUsers() {
-  const [users, setUsers] = useState<User[]>([]);
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await getAllUser();
-        setUsers(response);
-      } catch (error) {
-        console.error(
-          "Erreur lors de la récupération des utilisateurs :",
-          error
-        );
-      }
-    };
-
-    fetchUsers();
-  }, []);
-
+  const { users } = useContext(UsersContext);
   return (
     <div className="flex flex-col">
       <h1 className="ml-20 mb-20">Les utilisateurs</h1>

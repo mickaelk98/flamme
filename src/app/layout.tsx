@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import BodyClassUpdater from "./components/BodyClassUpdater";
 import AuthProvider from "./components/AuthProvider";
+import UsersProvider from "./components/UsersProvider";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -19,8 +20,10 @@ export default async function RootLayout({
     <html lang="fr">
       <body className="flex flex-col">
         <AuthProvider>
-          <BodyClassUpdater />
-          {children}
+          <UsersProvider>
+            <BodyClassUpdater />
+            {children}
+          </UsersProvider>
         </AuthProvider>
       </body>
     </html>
