@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import BodyClassUpdater from "./components/BodyClassUpdater";
-import AuthProvider from "./components/AuthProvider";
-import UsersProvider from "./components/UsersProvider";
+import BodyClassUpdater from "./components/ui/BodyClassUpdater";
+import AuthProvider from "./components/provider/AuthProvider";
+import UsersProvider from "./components/provider/UsersProvider";
 import "./globals.css";
 
 export const metadata: Metadata = {

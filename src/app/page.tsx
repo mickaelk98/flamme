@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import Header from "./components/Header";
+import Header from "./components/ui/Header";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "./context/AuthContext";
 export default function Home() {

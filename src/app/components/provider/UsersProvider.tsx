@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState, useContext } from "react";
-import { getAllUser } from "../services";
-import { User } from "../Interfaces";
-import { UsersContext } from "../context/UsersContext";
-import { AuthContext } from "../context/AuthContext";
-import { databases, ID } from "../appwrite";
+import { getAllUser } from "../../services";
+import { User } from "../../Interfaces";
+import { UsersContext } from "../../context/UsersContext";
+import { AuthContext } from "../../context/AuthContext";
+import { databases, ID } from "../../appwrite";
 
 function UserProvider({ children }: { children: React.ReactNode }) {
   const [users, setUsers] = useState<User[]>([]);

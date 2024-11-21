@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
-import { User, SignupUser } from "../Interfaces";
-import { getCurrentUser, login, logout, signup } from "../services";
+import { AuthContext } from "../../context/AuthContext";
+import { User, SignupUser } from "../../Interfaces";
+import { getCurrentUser, login, logout, signup } from "../../services";
 
 function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);

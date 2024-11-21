@@ -1,8 +1,8 @@
 "use client";
 
 import { useContext, useEffect } from "react";
-import AllUsers from "../components/AllUsers";
-import AsideMenu from "../components/AsideMenu";
+import AllUsers from "../components/ui/AllUsers";
+import AsideMenu from "../components/ui/AsideMenu";
 import { AuthContext } from "../context/AuthContext";
 import { useRouter } from "next/navigation";
 

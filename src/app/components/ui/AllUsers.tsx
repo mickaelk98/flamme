@@ -2,7 +2,7 @@
 
 import UserCard from "./UserCard";
 import { useContext } from "react";
-import { UsersContext } from "../context/UsersContext";
+import { UsersContext } from "@/app/context/UsersContext";
 
 export default function AllUsers() {
   const { users } = useContext(UsersContext);

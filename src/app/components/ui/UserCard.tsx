@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import Image from "next/image";
 import { FaHeart, FaTimes } from "react-icons/fa";
-import { User } from "../Interfaces";
-import { UsersContext } from "../context/UsersContext";
+import { User } from "../../Interfaces";
+import { UsersContext } from "../../context/UsersContext";
 
 const UserCard: React.FC<{ user: User }> = ({ user }) => {
   const { likeUser } = useContext(UsersContext);
