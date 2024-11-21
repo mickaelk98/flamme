@@ -1,0 +1,33 @@
+# Ignorer les dossiers node_modules et .next car ils seront reconstruits
+node_modules
+.next
+
+# Ignorer les fichiers de logs
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+pnpm-debug.log
+
+# Ignorer les fichiers temporaires ou spécifiques à l'éditeur
+*.swp
+*.swo
+*.tmp
+*.idea
+*.vscode
+.DS_Store
+*.env.local
+.env.*
+!.env.production
+
+# Ignorer les fichiers de contrôle de version
+.git
+.gitignore
+
+# Ignorer les fichiers de build locaux
+/build
+dist
+
+# Autres fichiers inutiles
+*.log
+coverage
+exemple.txt
