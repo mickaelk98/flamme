@@ -1,19 +1,9 @@
 services:
-  app:
-    build:
-      context: .
-    image: nextjs
-    ports:
-      - "3000:3000"
-    environment:
-      NODE_ENV: development
-    volumes:
-      - ./src:/app/src
-      - ./public:/app/public
-      - /app/node_modules
   db:
-    image: postgres:15-alpine
+    image: postgres
     environment:
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: exemple
+      POSTGRES_DB: flamme
     ports:
       - "5432:5432"

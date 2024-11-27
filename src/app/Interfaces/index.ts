@@ -8,10 +8,10 @@ export interface SignupUser {
   name: string;
   email: string;
   password: string;
-  gender: Gender;
-  dateOfBirth: Date;
-  picture?: File;
+  gender: string;
+  picture?: File | null;
   bio: string;
+  birthDate: string;
 }
 
 export interface LoginUser {
@@ -20,19 +20,16 @@ export interface LoginUser {
 }
 
 export interface User {
-  $id: string;
+  id: number;
   name: string;
   email: string;
-  prefs: {
-    dataOfBirth: string;
-    age: number;
-    gender: string;
-    bio: string;
-    picture: string;
-  };
-  [prop: string]: unknown;
+  password: string;
+  dataOfBirth: string;
+  age: number;
+  gender: string;
+  bio: string;
+  picture: string;
 }
-
 export interface AuthContextValue {
   user: User | null;
   signupUser: (data: SignupUser) => void;

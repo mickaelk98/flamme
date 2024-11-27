@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
+    "@prisma/client": "^5.22.0",
     "appwrite": "^16.0.2",
     "bcrypt": "^5.1.1",
     "jsonwebtoken": "^9.0.2",
@@ -30,6 +31,7 @@
     "eslint": "^8",
     "eslint-config-next": "15.0.1",
     "postcss": "^8",
+    "prisma": "^5.22.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }

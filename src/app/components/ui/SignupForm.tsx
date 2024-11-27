@@ -1,74 +1,43 @@
-import React, { useContext, useEffect } from "react";
-import * as yup from "yup";
+import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SignupUser } from "@/app/Interfaces";
-import { Gender } from "@/app/Interfaces";
 import { FaCloudUploadAlt } from "react-icons/fa";
-import { AuthContext } from "@/app/context/AuthContext";
+import signupSchema from "@/lib/yup/schemas/signup";
+import { createUser } from "@/actions/auth";
 
 export default function SignupForm() {
   const [step, setStep] = useState(0);
   const router = useRouter();
-  const { user, signupUser } = useContext(AuthContext);
-
-  const schema = yup.object().shape({
-    name: yup
-      .string()
-      .required("Ce champ est obligatoire")
-      .min(3, "Votre nom est trop court"),
-    email: yup
-      .string()
-      .email("Votre saisie ne correspond pas à une adresse email")
-      .required("Ce champ est obligatoire"),
-    password: yup
-      .string()
-      .required("Ce champ est obligatoire")
-      .min(6, "Le mot de passe doit comporter au moins 6 caractères"),
-    gender: yup
-      .mixed<Gender>()
-      .oneOf(Object.values(Gender), "Veuillez sélectionner votre sexe")
-      .required("Veuillez sélectionner votre sexe"),
-    dateOfBirth: yup
-      .date()
-      .required("Ce champ est obligatoire")
-      .max(new Date(), "La date doit être dans le passé"),
-    picture: yup
-      .mixed<File>()
-      .test("fileType", "Le fichier doit être une image", (value) => {
-        return (
-          !value || (value instanceof File && value.type.startsWith("image/"))
-        );
-      }),
-    bio: yup
-      .string()
-      .required("Veuillez entrer votre biographie")
-      .max(500, "La biographie ne doit pas dépasser 500 caractères"),
-  });
 
   const {
     control,
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(signupSchema),
   });
 
-  useEffect(() => {
-    if (user) {
-      router.push("/userpage");
-    }
-  }, [user, router]);
-
   const onSubmit = async (data: SignupUser) => {
-    try {
-      signupUser(data);
-    } catch (error) {
-      console.log(error);
+    const result = await createUser(data);
+    if (result.message === "Inscription reussie") {
+      router.push("/login");
+    } else {
+      if (result.name === "email") {
+        setError("email", {
+          message: result.message,
+        });
+      }
+      if (result.name === "age") {
+        setError("birthDate", {
+          message: result.message,
+        });
+      }
     }
   };
 
@@ -121,12 +90,12 @@ export default function SignupForm() {
             )}
           </div>
           <div className="flex flex-col gap-2">
-            <label htmlFor="dateOfBirth" className="text-xl">
+            <label htmlFor="birthdate" className="text-xl">
               Date de naissance
             </label>
-            <input type="date" className="p-2" {...register("dateOfBirth")} />
-            {errors.dateOfBirth && (
-              <span className="text-red-500">{errors.dateOfBirth.message}</span>
+            <input type="date" className="p-2" {...register("birthDate")} />
+            {errors.birthDate && (
+              <span className="text-red-500">{errors.birthDate.message}</span>
             )}
           </div>
         </>

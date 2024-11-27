@@ -1,66 +1,34 @@
 "use client";
 
-import React, { useContext, useEffect } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
-import * as yup from "yup";
+import loginSchema from "@/lib/yup/schemas/login";
 import { useRouter } from "next/navigation";
-import { AuthContext } from "@/app/context/AuthContext";
-import { AppwriteException } from "appwrite";
+import { login } from "@/actions/auth";
 import { LoginUser } from "@/app/Interfaces";
 
 export default function LoginForm() {
   const router = useRouter();
-  const { user, loginUser } = useContext(AuthContext);
-  const schema = yup.object().shape({
-    email: yup
-      .string()
-      .email("Votre saisie ne correspond pas à une adresse email")
-      .required("Ce champ est obligatoire"),
-    password: yup
-      .string()
-      .required("Ce champ est obligatoire")
-      .min(6, "Le mot de passe doit comporter au moins 6 caractères"),
-  });
+  const [credentialError, setCredentialError] = useState(false);
+  const [credentialErrorMessage, setCredentialErrorMessage] = useState("");
 
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(loginSchema),
   });
 
-  useEffect(() => {
-    if (user) {
-      router.push("/userpage");
-    }
-  }, [user, router]);
-
   const onSubmit = async (data: LoginUser) => {
-    try {
-      const { email, password } = data;
-      loginUser(email, password);
-
-      router.push("/userpage");
-    } catch (error) {
-      console.log(error);
-      if (error instanceof AppwriteException) {
-        if (error.code === 401) {
-          setError("password", {
-            type: "password",
-            message: "Identifiant ou mot de passe incorrect",
-          });
-        } else {
-          console.error(`Erreur: ${error.message}`);
-        }
-      } else {
-        console.error(
-          "Une erreur inconnue s'est produite, veuillez réessayer plus tard."
-        );
-      }
+    const result = await login(data);
+    if (result.message === "Connexion reussie") {
+      router.push("/signup");
+    } else {
+      setCredentialError(true);
+      setCredentialErrorMessage(result.message);
     }
   };
 
@@ -85,6 +53,9 @@ export default function LoginForm() {
         <input type="password" className="p-2" {...register("password")} />
         {errors.password && (
           <span className="text-red-500">{errors.password.message}</span>
+        )}
+        {credentialError && (
+          <span className="text-red-500 mt-2">{credentialErrorMessage}</span>
         )}
       </div>
 
