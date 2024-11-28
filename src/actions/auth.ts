@@ -7,7 +7,7 @@ import { cookies } from "next/headers";
 import { SignupUser, LoginUser } from "@/app/Interfaces";
 import { storage, ID } from "@/lib/appwrite";
 
-export async function createUser(data: SignupUser) {
+export async function signup(data: SignupUser) {
   const { email, password, name, bio, gender, birthDate } = data;
 
   // verifie si tous les champs sont remplis

@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { SignupUser } from "@/app/Interfaces";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import signupSchema from "@/lib/yup/schemas/signup";
-import { createUser } from "@/actions/auth";
+import { signup } from "@/actions/auth";
 
 export default function SignupForm() {
   const [step, setStep] = useState(0);
@@ -24,7 +24,7 @@ export default function SignupForm() {
   });
 
   const onSubmit = async (data: SignupUser) => {
-    const result = await createUser(data);
+    const result = await signup(data);
     if (result.message === "Inscription reussie") {
       router.push("/login");
     } else {
