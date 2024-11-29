@@ -1,22 +1,10 @@
 "use client";
-
+import { useContext } from "react";
+import { UsersContext } from "@/app/context/UsersContext";
 import UserCard from "./UserCard";
 
 export default function AllUsers() {
-  const users = [
-    {
-      id: "1",
-      name: "John Doe",
-      age: 25,
-      gender: "male",
-      picture:
-        "https://cloud.appwrite.io/v1/storage/buckets/6720cb6300320c082790/files/67277f710033551da148/view?project=6720cb000037a070ab4a&project=6720cb000037a070ab4a&mode=admin",
-      email: "test@mail.com",
-      password: "test",
-      birthDate: "2000-01-01",
-    },
-  ];
-
+  const { users } = useContext(UsersContext);
   return (
     <div className="flex flex-col">
       <h1 className="ml-20 mb-20">Les utilisateurs</h1>

@@ -50,6 +50,5 @@ export interface AuthContextValue {
 }
 
 export interface UsersContextValue {
-  users: User[];
-  likeUser: (user: User, liked: boolean) => void;
+  users: User[] | [];
 }

@@ -1,5 +1,3 @@
-"use client";
-
 import AllUsers from "../components/ui/AllUsers";
 import AsideMenu from "../components/ui/AsideMenu";
 
