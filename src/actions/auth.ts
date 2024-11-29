@@ -28,6 +28,8 @@ export async function signup(
 
   // verifie si l'email est deja utilise
   const user = await prisma.user.findUnique({ where: { email: data.email } });
+  console.log("utilisateur : ", user);
+
   if (user) {
     return {
       message: "Cette adresse email est deja utilisée",

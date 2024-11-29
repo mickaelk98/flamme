@@ -8,15 +8,49 @@ datasource db {
 }
 
 model User {
-  id         Int       @id @default(autoincrement())
-  name       String
-  email      String    @unique
-  password   String
-  birthDate  String
-  age        Int
-  gender     String
-  bio        String
-  picture  String
-  createdAt  DateTime  @default(now())
+  id                  Int       @id @default(autoincrement())
+  name                String
+  email               String    @unique
+  password            String
+  birthDate           String
+  age                 Int
+  gender              String
+  bio                 String
+  picture             String
+  likesGiven          Like[]   @relation("likesGiven") // Likes donnés par l'utilisateur
+  likesReceived       Like[] @relation("likesReceived") // Likes reçus par l'utilisateur
+  matchesAsUser1      Match[] @relation("matchesAsUser1") // Matchs où l'utilisateur est le user1
+  matchesAsUser2      Match[] @relation("matchesAsUser2") // Matchs où l'utilisateur est le user2
+  messages            Message[] // Messages envoyés/reçus
+  createdAt           DateTime  @default(now())
 }
 
+model Like {
+  id         Int      @id @default(autoincrement())
+  fromUser   User     @relation("likesGiven", fields: [fromUserId], references: [id])
+  fromUserId Int
+  toUser     User     @relation("likesReceived", fields: [toUserId], references: [id])
+  toUserId   Int
+  liked      Boolean // true pour like, false pur dislike
+  createdAt  DateTime @default(now())
+}
+
+model Match {
+  id         Int      @id @default(autoincrement())
+  user1      User     @relation("matchesAsUser1", fields: [user1Id], references: [id])
+  user1Id    Int
+  user2      User     @relation("matchesAsUser2", fields: [user2Id], references: [id])
+  user2Id    Int
+  messages   Message[]
+  createdAt  DateTime @default(now())
+}
+
+model Message {
+  id         Int      @id @default(autoincrement())
+  match      Match    @relation(fields: [matchId], references: [id])
+  matchId    Int
+  sender     User     @relation(fields: [senderId], references: [id])
+  senderId   Int
+  content    String
+  createdAt  DateTime @default(now())
+}
