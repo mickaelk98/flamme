@@ -28,6 +28,7 @@ export interface User {
   gender: string;
   bio: string;
   picture: string;
+  createdAt: object;
 }
 
 export interface AuthSuccess {
