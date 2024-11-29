@@ -4,21 +4,36 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import prisma from "@/lib/prisma";
 import { cookies } from "next/headers";
-import { SignupUser, LoginUser } from "@/app/Interfaces";
+import {
+  SignupUser,
+  LoginUser,
+  AuthSuccess,
+  AuthError,
+} from "@/app/Interfaces";
 import { storage, ID } from "@/lib/appwrite";
 
-export async function signup(data: SignupUser) {
+export async function signup(
+  data: SignupUser
+): Promise<AuthSuccess | AuthError> {
   const { email, password, name, bio, gender, birthDate } = data;
 
   // verifie si tous les champs sont remplis
   if (!email || !password || !name || !birthDate || !gender || !bio) {
-    return { message: "Tous les champs sont requis." };
+    return {
+      message: "Tous les champs sont requis.",
+      name: "all",
+      type: "error",
+    };
   }
 
   // verifie si l'email est deja utilise
   const user = await prisma.user.findUnique({ where: { email: data.email } });
   if (user) {
-    return { message: "Cette adresse email est deja utilisée", name: "email" };
+    return {
+      message: "Cette adresse email est deja utilisée",
+      name: "email",
+      type: "error",
+    };
   }
 
   // verifie si il y a une image et si elle est valide et gestion de l'upload
@@ -37,7 +52,11 @@ export async function signup(data: SignupUser) {
   const age = calculateAge(birthDate);
 
   if (age < 16) {
-    return { message: "Vous devez avoir au moins 16 ans", name: "age" };
+    return {
+      message: "Vous devez avoir au moins 16 ans",
+      name: "age",
+      type: "error",
+    };
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -50,24 +69,32 @@ export async function signup(data: SignupUser) {
   const newUser = await prisma.user.create({ data: newData });
   const { password: _, ...rest } = newUser;
 
-  return { message: "Inscription reussie", rest };
+  return { message: "Inscription reussie", rest, type: "success" };
 }
 
-export async function login(data: LoginUser) {
+export async function login(data: LoginUser): Promise<AuthSuccess | AuthError> {
   const { email, password } = data;
   const cookieStore = await cookies();
 
   const user = await prisma.user.findUnique({ where: { email } });
 
   if (!user) {
-    return { message: "Identifiant ou mot de passe incorrect" };
+    return {
+      message: "Identifiant ou mot de passe incorrect",
+      name: "all",
+      type: "error",
+    };
   } else {
     const userPassword = user.password;
     const validPassword = await bcrypt.compare(password, userPassword);
     const { password: _, ...rest } = user;
 
     if (!validPassword) {
-      return { message: "Identifiant ou mot de passe incorrect" };
+      return {
+        message: "Identifiant ou mot de passe incorrect",
+        name: "all",
+        type: "error",
+      };
     }
 
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET_KEY!, {
@@ -75,7 +102,7 @@ export async function login(data: LoginUser) {
     });
     cookieStore.set("token", token);
 
-    return { message: "Connexion reussie", rest };
+    return { message: "Connexion reussie", rest, type: "success" };
   }
 }
 

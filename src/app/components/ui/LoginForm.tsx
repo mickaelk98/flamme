@@ -1,18 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
 import loginSchema from "@/lib/yup/schemas/login";
 import { useRouter } from "next/navigation";
-import { login } from "@/actions/auth";
 import { LoginUser } from "@/app/Interfaces";
+import { AuthContext } from "@/app/context/AuthContext";
 
 export default function LoginForm() {
   const router = useRouter();
   const [credentialError, setCredentialError] = useState(false);
   const [credentialErrorMessage, setCredentialErrorMessage] = useState("");
+  const { loginUser } = useContext(AuthContext);
 
   const {
     register,
@@ -23,9 +24,9 @@ export default function LoginForm() {
   });
 
   const onSubmit = async (data: LoginUser) => {
-    const result = await login(data);
-    if (result.message === "Connexion reussie") {
-      router.push("/signup");
+    const result = await loginUser(data);
+    if (result.type === "success") {
+      router.push("/userpage");
     } else {
       setCredentialError(true);
       setCredentialErrorMessage(result.message);

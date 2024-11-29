@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
@@ -7,11 +7,12 @@ import { useRouter } from "next/navigation";
 import { SignupUser } from "@/app/Interfaces";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import signupSchema from "@/lib/yup/schemas/signup";
-import { signup } from "@/actions/auth";
+import { AuthContext } from "@/app/context/AuthContext";
 
 export default function SignupForm() {
   const [step, setStep] = useState(0);
   const router = useRouter();
+  const { signupUser } = useContext(AuthContext);
 
   const {
     control,
@@ -24,10 +25,9 @@ export default function SignupForm() {
   });
 
   const onSubmit = async (data: SignupUser) => {
-    const result = await signup(data);
-    if (result.message === "Inscription reussie") {
-      router.push("/login");
-    } else {
+    const result = await signupUser(data);
+
+    if (result.type === "error") {
       if (result.name === "email") {
         setError("email", {
           message: result.message,
@@ -38,6 +38,8 @@ export default function SignupForm() {
           message: result.message,
         });
       }
+    } else {
+      router.push("/login");
     }
   };
 

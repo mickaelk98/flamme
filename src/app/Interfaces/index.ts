@@ -23,15 +23,29 @@ export interface User {
   id: number;
   name: string;
   email: string;
-  password: string;
-  dataOfBirth: string;
+  birthDate: string;
   age: number;
   gender: string;
   bio: string;
   picture: string;
 }
+
+export interface AuthSuccess {
+  message: string;
+  rest: User;
+  type: "success";
+}
+
+export interface AuthError {
+  message: string;
+  name: string;
+  type: "error";
+}
+
 export interface AuthContextValue {
   user: User | null;
+  signupUser: (data: SignupUser) => Promise<AuthSuccess | AuthError>;
+  loginUser: (email: LoginUser) => Promise<AuthSuccess | AuthError>;
 }
 
 export interface UsersContextValue {

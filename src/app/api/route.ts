@@ -19,6 +19,6 @@ export async function POST(request: Request) {
 
   const userId = decodedToken.userId;
   const user = await prisma.user.findUnique({ where: { id: userId } });
-
-  return NextResponse.json(user, { status: 200 });
+  const { password: _, ...rest } = user!;
+  return NextResponse.json(rest, { status: 200 });
 }

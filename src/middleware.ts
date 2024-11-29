@@ -20,7 +20,6 @@ export async function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
-  // Logique pour les utilisateurs non connectés
   if (!user) {
     if (pathname === "/userpage") {
       return NextResponse.redirect(new URL("/login", request.url));
@@ -28,7 +27,6 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Logique pour les utilisateurs connectés
   if (user) {
     if (["/", "/login", "/signup"].includes(pathname)) {
       return NextResponse.redirect(new URL("/userpage", request.url));
