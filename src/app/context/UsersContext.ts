@@ -6,4 +6,5 @@ export const UsersContext = createContext<UsersContextValue>({
   like: () => {},
   likedUser: [],
   dislikedUser: [],
+  matches: [],
 });

@@ -54,4 +54,5 @@ export interface UsersContextValue {
   like: (from: number, to: number, liked: boolean) => void;
   likedUser: User[] | [];
   dislikedUser: User[] | [];
+  matches: User[] | [];
 }

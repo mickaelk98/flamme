@@ -104,3 +104,28 @@ export async function getUsersDisliked(userId: number) {
 
   return users;
 }
+
+export async function allMatches(userId: number) {
+  const matches = await prisma.match.findMany({
+    where: {
+      OR: [
+        {
+          user1Id: userId,
+        },
+        {
+          user2Id: userId,
+        },
+      ],
+    },
+    include: {
+      user1: true,
+      user2: true,
+    },
+  });
+
+  const users = matches.flatMap((match) =>
+    match.user1Id === userId ? [match.user2] : [match.user1]
+  );
+
+  return users;
+}
