@@ -15,14 +15,15 @@ export default function AsideMenu() {
       <div className="flex items-center justify-between mb-12 ursor-pointer">
         <div className="flex items-center gap-2 ">
           <div className="rounded-full w-12 h-12 overflow-hidden">
-            {/* Affichage de l'image de l'utilisateur, ou une image par défaut si absente */}
-            <Image
-              src={user?.picture || "/default-avatar.png"} // Image par défaut si l'utilisateur n'a pas de photo
-              alt="User Avatar"
-              width={50}
-              height={50}
-              className="object-cover w-full h-full" // S'assure que l'image est bien recadrée dans le cercle
-            />
+            {user && (
+              <Image
+                src={user.picture}
+                alt="User Avatar"
+                width={50}
+                height={50}
+                className="object-cover w-full h-full"
+              />
+            )}
           </div>
           <p>{user?.name}</p>
         </div>

@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 
 export async function likeUser(
   fromUserId: number,
@@ -60,7 +61,7 @@ export async function likeUser(
       });
     }
   }
-
+  revalidatePath("/userpage");
   return {
     message: liked ? "Vous avez liker" : "Vous avez dislike",
   };
