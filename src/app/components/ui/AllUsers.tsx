@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { UsersContext } from "@/app/context/UsersContext";
 import UserCard from "./UserCard";
 
-export default function AllUsers() {
+export default function AllUsers({}) {
   const { users } = useContext(UsersContext);
   return (
     <div className="flex flex-col w-full">
