@@ -11,13 +11,10 @@ export default function BodyClassUpdater() {
     "bg-cover",
     "bg-center",
     "bg-no-repeat",
+    "flex",
+    "flex-col",
   ];
-  const authFormClass: Array<string> = [
-    "h-screen",
-    "bg-cover",
-    "bg-center",
-    "bg-no-repeat",
-  ];
+  const authFormClass: Array<string> = ["bg-primary"];
   const userpageClass: Array<string> = ["bg-red-200"];
 
   useEffect(() => {
@@ -29,7 +26,6 @@ export default function BodyClassUpdater() {
       document.body.style.backgroundImage = 'url("/landing.jpg")';
     } else if (pathname === "/login" || pathname === "/signup") {
       document.body.classList.add(...authFormClass);
-      document.body.style.backgroundImage = 'url("/landing-form.webp")';
     } else if (pathname === "/userpage") {
       document.body.classList.add(...userpageClass);
     }

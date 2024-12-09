@@ -35,35 +35,51 @@ export default function LoginForm() {
 
   return (
     <form
-      className="flex flex-col gap-4 w-[500px] text-black"
+      className="flex flex-col gap-6 w-[500px] text-mainText bg-myWhite shadow-md rounded-lg p-6"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <div className="flex flex-col gap-2">
-        <label htmlFor="email" className="text-xl">
+      <div className="flex flex-col gap-3">
+        <label htmlFor="email" className="text-lg font-semibold text-mainText">
           Votre email
         </label>
-        <input type="text" className="p-2" {...register("email")} />
+        <input
+          type="text"
+          className="p-3 border border-secondaryTextt rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          {...register("email")}
+        />
         {errors.email && (
-          <span className="text-red-500">{errors.email.message}</span>
+          <span className="text-myRed text-sm">{errors.email.message}</span>
         )}
       </div>
-      <div className="flex flex-col gap-2">
-        <label htmlFor="password" className="text-xl">
+      <div className="flex flex-col gap-3">
+        <label
+          htmlFor="password"
+          className="text-lg font-semibold text-mainText"
+        >
           Mot de passe
         </label>
-        <input type="password" className="p-2" {...register("password")} />
+        <input
+          type="password"
+          className="p-3 border border-secondaryText rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          {...register("password")}
+        />
         {errors.password && (
-          <span className="text-red-500">{errors.password.message}</span>
+          <span className="text-myRed text-sm">{errors.password.message}</span>
         )}
         {credentialError && (
-          <span className="text-red-500 mt-2">{credentialErrorMessage}</span>
+          <span className="text-myRed text-sm mt-1">
+            {credentialErrorMessage}
+          </span>
         )}
       </div>
 
-      <button className="self-end bg-rose-400 p-2 text-xl font-bold rounded-3xl">
+      <button className="self-end bg-primary text-myWhite py-3 px-6 rounded-full text-lg font-bold hover:bg-myRed transition-all">
         Se connecter
       </button>
-      <Link className="self-start underline text-xl font-bold" href="/signup">
+      <Link
+        className="self-start text-mainText underline text-lg font-semibold transition-all"
+        href="/signup"
+      >
         Je n&apos;ai pas de compte
       </Link>
     </form>

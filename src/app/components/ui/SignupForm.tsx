@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SignupUser } from "@/app/Interfaces";
@@ -45,65 +44,113 @@ export default function SignupForm() {
 
   return (
     <form
-      className="flex flex-col gap-4 w-[500px] text-black"
+      className="flex flex-col gap-6 w-[500px] text-mainText bg-myWhite shadow-lg rounded-lg p-6"
       onSubmit={handleSubmit(onSubmit)}
     >
-      {step === 0 ? (
+      {step === 0 && (
         <>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="name" className="text-xl">
+          <div className="flex flex-col gap-3">
+            <label
+              htmlFor="name"
+              className="text-lg font-semibold text-mainText"
+            >
               Votre nom ou pseudo
             </label>
-            <input type="text" className="p-2" {...register("name")} />
+            <input
+              type="text"
+              className="p-3 border border-secondaryText rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+              {...register("name")}
+            />
             {errors.name && (
-              <span className="text-red-500">{errors.name.message}</span>
+              <span className="text-myRed text-sm">{errors.name.message}</span>
             )}
           </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="email" className="text-xl">
+          <div className="flex flex-col gap-3">
+            <label
+              htmlFor="email"
+              className="text-lg font-semibold text-mainText"
+            >
               Votre email
             </label>
-            <input type="text" className="p-2" {...register("email")} />
+            <input
+              type="text"
+              className="p-3 border border-secondaryText rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+              {...register("email")}
+            />
             {errors.email && (
-              <span className="text-red-500">{errors.email.message}</span>
+              <span className="text-myRed text-sm">{errors.email.message}</span>
             )}
           </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="password" className="text-xl">
+        </>
+      )}
+
+      {step === 1 && (
+        <>
+          <div className="flex flex-col gap-3">
+            <label
+              htmlFor="password"
+              className="text-lg font-semibold text-mainText"
+            >
               Mot de passe
             </label>
-            <input type="password" className="p-2" {...register("password")} />
+            <input
+              type="password"
+              className="p-3 border border-secondaryText rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+              {...register("password")}
+            />
             {errors.password && (
-              <span className="text-red-500">{errors.password.message}</span>
+              <span className="text-myRed text-sm">
+                {errors.password.message}
+              </span>
             )}
           </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="gender" className="text-xl">
+          <div className="flex flex-col gap-3">
+            <label
+              htmlFor="gender"
+              className="text-lg font-semibold text-mainText"
+            >
               Votre sexe
             </label>
-            <select className="p-2" {...register("gender")} id="gender">
+            <select
+              className="p-3 border border-secondaryText rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+              {...register("gender")}
+              id="gender"
+            >
               <option value="">Sélectionnez...</option>
               <option value="male">Homme</option>
               <option value="female">Femme</option>
               <option value="other">Autre</option>
             </select>
             {errors.gender && (
-              <span className="text-red-500">{errors.gender.message}</span>
+              <span className="text-myRed text-sm">
+                {errors.gender.message}
+              </span>
             )}
           </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="birthdate" className="text-xl">
+          <div className="flex flex-col gap-3">
+            <label
+              htmlFor="birthdate"
+              className="text-lg font-semibold text-mainText"
+            >
               Date de naissance
             </label>
-            <input type="date" className="p-2" {...register("birthDate")} />
+            <input
+              type="date"
+              className="p-3 border border-secondaryText rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+              {...register("birthDate")}
+            />
             {errors.birthDate && (
-              <span className="text-red-500">{errors.birthDate.message}</span>
+              <span className="text-myRed text-sm">
+                {errors.birthDate.message}
+              </span>
             )}
           </div>
         </>
-      ) : (
+      )}
+
+      {step === 2 && (
         <>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-3">
             <Controller
               name="picture"
               control={control}
@@ -115,24 +162,24 @@ export default function SignupForm() {
                     className="hidden"
                     onChange={(e) => {
                       if (e.target.files && e.target.files.length > 0) {
-                        field.onChange(e.target.files[0]); // Prend le premier fichier
+                        field.onChange(e.target.files[0]);
                       } else {
-                        field.onChange(null); // Si aucun fichier, remet à null
+                        field.onChange(null);
                       }
                     }}
                   />
                   <label
                     htmlFor="file-upload"
-                    className="px-6 py-3 bg-rose-400 text-white font-semibold rounded-lg cursor-pointer focus:outline-none flex justify-between items-center"
+                    className="px-6 py-3 bg-primary text-myWhite font-semibold rounded-lg cursor-pointer flex justify-between items-center hover:bg-myRed transition-all"
                   >
                     Choisissez votre photo de profil
                     <FaCloudUploadAlt />
                   </label>
-                  <span className="ml-4 text-gray-700">
+                  <span className="ml-4 text-secondaryText">
                     {field.value?.name || "Aucun fichier choisi"}
                   </span>
                   {errors.picture && (
-                    <span className="text-red-500">
+                    <span className="text-myRed text-sm">
                       {errors.picture.message}
                     </span>
                   )}
@@ -140,32 +187,56 @@ export default function SignupForm() {
               )}
             />
           </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="bio" className="text-xl">
+          <div className="flex flex-col gap-3">
+            <label
+              htmlFor="bio"
+              className="text-lg font-semibold text-mainText"
+            >
               Votre biographie
             </label>
             <textarea
               {...register("bio")}
-              className="p-2 h-52 resize-none rounded-lg outline-none"
+              className="p-3 border border-secondaryText h-52 resize-none rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
             ></textarea>
             {errors.bio && (
-              <span className="text-red-500">{errors.bio.message}</span>
+              <span className="text-myRed text-sm">{errors.bio.message}</span>
             )}
           </div>
         </>
       )}
-      <button
-        onClick={() => setStep(step === 0 ? 1 : 0)}
-        type="button"
-        className="self-start bg-white text-rose-400 p-2 text-xl font-bold rounded-3xl"
+
+      <div className="flex justify-between">
+        {step > 0 && (
+          <button
+            type="button"
+            className="bg-myWhite text-primary py-2 px-4 text-lg font-bold rounded-full border border-primary hover:bg-primary hover:text-myWhite transition-all"
+            onClick={() => setStep(step - 1)}
+          >
+            Précédent
+          </button>
+        )}
+        {step < 2 ? (
+          <button
+            type="button"
+            className="bg-primary py-2 px-4 text-lg font-bold text-myWhite rounded-full hover:bg-myRed transition-all"
+            onClick={() => setStep(step + 1)}
+          >
+            Suivant
+          </button>
+        ) : (
+          <button
+            type="submit"
+            className="bg-primary py-2 px-4 text-lg font-bold text-myWhite rounded-full hover:bg-myRed transition-all"
+          >
+            S&apos;inscrire
+          </button>
+        )}
+      </div>
+      <Link
+        className="self-start underline text-lg font-semibold text-mainText transition-all"
+        href="/login"
       >
-        {step === 0 ? "Suivant" : "Précédent"}
-      </button>
-      <button className="self-end bg-rose-400 p-2 text-xl font-bold rounded-3xl">
-        S&apos;inscrire
-      </button>
-      <Link className="self-start underline text-xl font-bold" href="/login">
-        J&apos;ai deja un compte
+        J&apos;ai déjà un compte
       </Link>
     </form>
   );

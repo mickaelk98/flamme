@@ -5,11 +5,7 @@ import { AiFillLike } from "react-icons/ai";
 
 export default function AsideMenu() {
   return (
-    <aside className="flex-[20%] flex flex-col gap-5 p-5 bg-blue-300">
-      <div className="flex items-center gap-5 text-4xl my-5">
-        <FaHeart />
-        <h1 className="font-bold">Flamme</h1>
-      </div>
+    <aside className="flex-[20%] flex flex-col gap-5 p-5 bg-myWhite shadow-md shadow-secondaryText text-mainText">
       <div className="flex items-center justify-between mb-12 ursor-pointer">
         <div className="flex items-center gap-2 ">
           <FaUser />

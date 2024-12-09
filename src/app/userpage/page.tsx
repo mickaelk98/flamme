@@ -5,7 +5,7 @@ export default function UserPage() {
   return (
     <main className="flex min-h-screen text-3xl">
       <AsideMenu />
-      <section className="flex-[80%] bg-slate-100 p-10">
+      <section className="flex-[80%] bg-primary py-5 px-2">
         <AllUsers />
       </section>
     </main>

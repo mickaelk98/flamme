@@ -18,12 +18,10 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body className="flex flex-col">
+      <body className="flex flex-co">
         <AuthProvider>
-          <UsersProvider>
-            <BodyClassUpdater />
-            {children}
-          </UsersProvider>
+          <BodyClassUpdater />
+          <UsersProvider>{children}</UsersProvider>
         </AuthProvider>
       </body>
     </html>
