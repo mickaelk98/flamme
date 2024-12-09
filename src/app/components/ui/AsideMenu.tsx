@@ -1,15 +1,30 @@
-import { FaHeart, FaUser, FaCoffee } from "react-icons/fa";
+"use client";
+
+import { useContext } from "react";
+import Image from "next/image";
+import { AuthContext } from "@/app/context/AuthContext";
+import { FaUser, FaCoffee } from "react-icons/fa";
 import { FaMessage } from "react-icons/fa6";
 import { IoSettings } from "react-icons/io5";
 import { AiFillLike } from "react-icons/ai";
 
 export default function AsideMenu() {
+  const { user } = useContext(AuthContext);
   return (
     <aside className="flex-[20%] flex flex-col gap-5 p-5 bg-myWhite shadow-md shadow-secondaryText text-mainText">
       <div className="flex items-center justify-between mb-12 ursor-pointer">
         <div className="flex items-center gap-2 ">
-          <FaUser />
-          <p>John Doe</p>
+          <div className="rounded-full w-12 h-12 overflow-hidden">
+            {/* Affichage de l'image de l'utilisateur, ou une image par défaut si absente */}
+            <Image
+              src={user?.picture || "/default-avatar.png"} // Image par défaut si l'utilisateur n'a pas de photo
+              alt="User Avatar"
+              width={50}
+              height={50}
+              className="object-cover w-full h-full" // S'assure que l'image est bien recadrée dans le cercle
+            />
+          </div>
+          <p>{user?.name}</p>
         </div>
         <IoSettings className="cursor-pointer hover:animate-spin" />
       </div>

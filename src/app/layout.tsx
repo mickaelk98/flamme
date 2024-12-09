@@ -18,7 +18,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body className="flex flex-co">
+      <body className="flex flex-col w-full">
         <AuthProvider>
           <BodyClassUpdater />
           <UsersProvider>{children}</UsersProvider>

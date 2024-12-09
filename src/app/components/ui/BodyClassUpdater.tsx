@@ -15,7 +15,6 @@ export default function BodyClassUpdater() {
     "flex-col",
   ];
   const authFormClass: Array<string> = ["bg-primary"];
-  const userpageClass: Array<string> = ["bg-red-200"];
 
   useEffect(() => {
     document.body.classList.remove("bg-home", "bg-login", "bg-signup");
@@ -26,8 +25,6 @@ export default function BodyClassUpdater() {
       document.body.style.backgroundImage = 'url("/landing.jpg")';
     } else if (pathname === "/login" || pathname === "/signup") {
       document.body.classList.add(...authFormClass);
-    } else if (pathname === "/userpage") {
-      document.body.classList.add(...userpageClass);
     }
   }, [pathname]);
 
