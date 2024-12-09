@@ -4,4 +4,6 @@ import { UsersContextValue } from "@/app/Interfaces";
 export const UsersContext = createContext<UsersContextValue>({
   users: [],
   like: () => {},
+  likedUser: [],
+  dislikedUser: [],
 });

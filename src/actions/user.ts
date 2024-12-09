@@ -38,3 +38,69 @@ export async function getAllUsers(userId: number) {
   });
   return users;
 }
+
+export async function getUsersLiked(userId: number) {
+  const likedUsers = await prisma.like.findMany({
+    where: {
+      fromUserId: userId,
+      liked: true,
+    },
+    select: {
+      toUserId: true,
+    },
+  });
+
+  const likedUserIds = likedUsers.map((like) => like.toUserId);
+
+  const users = await prisma.user.findMany({
+    where: {
+      id: { in: likedUserIds },
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      birthDate: true,
+      age: true,
+      gender: true,
+      bio: true,
+      picture: true,
+      createdAt: true,
+    },
+  });
+
+  return users;
+}
+
+export async function getUsersDisliked(userId: number) {
+  const dislikedUsers = await prisma.like.findMany({
+    where: {
+      fromUserId: userId,
+      liked: false,
+    },
+    select: {
+      toUserId: true,
+    },
+  });
+
+  const dislikedUserIds = dislikedUsers.map((like) => like.toUserId);
+
+  const users = await prisma.user.findMany({
+    where: {
+      id: { in: dislikedUserIds },
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      birthDate: true,
+      age: true,
+      gender: true,
+      bio: true,
+      picture: true,
+      createdAt: true,
+    },
+  });
+
+  return users;
+}
