@@ -1,10 +1,10 @@
 "use client";
 
-import AllUsers from "../components/ui/AllUsers";
-import AllMessages from "../components/ui/AllMessages";
-import AllLikes from "../components/ui/AllLikes";
-import AllMatches from "../components/ui/AllMatches";
-import AsideMenu from "../components/ui/AsideMenu";
+import AllUsers from "@/app/components/ui/AllUsers";
+import AllMessages from "@/app/components/ui/AllMessages";
+import AllLikes from "@/app/components/ui/AllLikes";
+import AllMatches from "@/app/components/ui/AllMatches";
+import AsideMenu from "@/app/components/ui/AsideMenu";
 import { useState } from "react";
 
 export default function UserPage() {
@@ -18,9 +18,7 @@ export default function UserPage() {
   return (
     <main className="flex min-h-screen text-3xl">
       <AsideMenu setPage={setPage} page={page} />
-      <section className="flex-[80%] bg-primary py-5 px-2">
-        {pages[page]}
-      </section>
+      <section className="flex-[80%] bg-primary">{pages[page]}</section>
     </main>
   );
 }
