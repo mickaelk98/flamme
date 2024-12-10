@@ -1,7 +1,9 @@
+"use client";
+
 import { useContext } from "react";
 import { UsersContext } from "@/app/context/UsersContext";
 import Message from "@/app/components/ui/Message";
-import Image from "next/image";
+import UserProfileMessage from "./UserProfileMeessage";
 
 export default function AllMessages() {
   const { matches } = useContext(UsersContext);
@@ -11,20 +13,7 @@ export default function AllMessages() {
         {matches.length > 0 ? (
           <>
             {matches.map((user) => (
-              <li key={user.id} className="flex items-center gap-2 mb-4">
-                <div className="rounded-full w-12 h-12 overflow-hidden">
-                  {user && (
-                    <Image
-                      src={user.picture}
-                      alt="User Avatar"
-                      width={50}
-                      height={50}
-                      className="object-cover w-full h-full"
-                    />
-                  )}
-                </div>
-                <span>{user.name}</span>
-              </li>
+              <UserProfileMessage key={user.id} user={user} />
             ))}
           </>
         ) : (
